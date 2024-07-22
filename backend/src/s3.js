@@ -1,4 +1,6 @@
+// src/s3.js
 const AWS = require('aws-sdk');
+require('dotenv').config();
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -12,7 +14,7 @@ const generatePresignedUrl = (fileName) => {
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: fileName,
-    Expires: 60, 
+    Expires: 60, // URL expires in 60 seconds
   };
   return new Promise((resolve, reject) => {
     s3.getSignedUrl('putObject', params, (err, url) => {
